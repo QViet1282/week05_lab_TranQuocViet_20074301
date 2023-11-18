@@ -1,5 +1,6 @@
 package vn.edu.iuh.fit.www_lab5.backend.models;
 
+import com.neovisionaries.i18n.LocaleCode;
 import jakarta.persistence.*;
 import vn.edu.iuh.fit.www_lab5.backend.enums.Country;
 
@@ -11,7 +12,7 @@ public class Address {
     @Column(name = "add_id", length = 20)
     private long addressId;
     @Column(columnDefinition = "smallint(6)")
-    private Country country;
+    private LocaleCode country;
     @Column(columnDefinition = "varchar(7)")
     private String zipcode;
     @Column(columnDefinition = "varchar(20)")
@@ -21,7 +22,7 @@ public class Address {
     @Column(columnDefinition = "varchar(150)")
     private String street;
 
-    public Address(Country country, String zipcode, String number, String city, String street) {
+    public Address(LocaleCode country, String zipcode, String number, String city, String street) {
         this.country = country;
         this.zipcode = zipcode;
         this.number = number;
@@ -41,11 +42,11 @@ public class Address {
         this.addressId = addressId;
     }
 
-    public Country getCountry() {
+    public LocaleCode getCountry() {
         return country;
     }
 
-    public void setCountry(Country country) {
+    public void setCountry(LocaleCode country) {
         this.country = country;
     }
 

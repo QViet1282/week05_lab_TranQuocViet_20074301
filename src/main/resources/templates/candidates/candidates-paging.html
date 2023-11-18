@@ -36,13 +36,13 @@ C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
             </thead>
             <tbody>
             <tr th:each="candidate : ${candidatePage.content}">
-                <td th:text="${candidate.id}"></td>
+                <td th:text="${candidate.candidateId}"></td>
                 <td th:text="${candidate.fullName}"></td>
                 <td th:text="${candidate.dob}"></td>
                 <td th:text="${candidate.address}"></td>
                 <td th:text="${candidate.phone}"></td>
                 <td th:text="${candidate.email}"></td>
-                <td><a th:href="@{/edit/{id}(id=${candidate.id})}">Edit</a></td><td><a th:href="@{/delete/{id}(id=${candidate.id})}">Delete</a></td>
+                <td><a th:href="@{/edit/{id}(id=${candidate.candidateId})}">Edit</a></td><td><a th:href="@{/delete/{id}(id=${candidate.candidateId})}">Delete</a></td>
             </tr>
             </tbody>
         </table>

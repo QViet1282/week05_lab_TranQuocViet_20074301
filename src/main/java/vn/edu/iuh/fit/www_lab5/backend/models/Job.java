@@ -2,6 +2,8 @@ package vn.edu.iuh.fit.www_lab5.backend.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "job")
 public class Job {
@@ -16,7 +18,8 @@ public class Job {
     private String jobDescription;
     @Column(name = "job_name", columnDefinition = "varchar(255)")
     private String jobName;
-
+//    @OneToMany(mappedBy = "jobId", cascade = CascadeType.ALL)
+//    List<JobSkill> jobSkills;
     public Job() {
     }
 
@@ -57,6 +60,7 @@ public class Job {
     public void setJobName(String jobName) {
         this.jobName = jobName;
     }
+
 
     @Override
     public String toString() {

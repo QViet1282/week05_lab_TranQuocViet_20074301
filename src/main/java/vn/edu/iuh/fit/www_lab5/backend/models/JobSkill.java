@@ -1,6 +1,7 @@
 package vn.edu.iuh.fit.www_lab5.backend.models;
 
 import jakarta.persistence.*;
+import vn.edu.iuh.fit.www_lab5.backend.enums.SkillLevel;
 import vn.edu.iuh.fit.www_lab5.backend.ids.JobSkillIds;
 
 @Entity
@@ -16,14 +17,15 @@ public class JobSkill {
     @JoinColumn(name = "skill_id")
     private Skill skillId;
     @Column(name = "skill_level", columnDefinition = "tinyint(4)")
-    private int skillLevel;
+    @Enumerated(EnumType.ORDINAL)
+    private SkillLevel skillLevel;
     @Column(name = "more_infos", columnDefinition = "varchar(1000)")
     private String moreInfos;
 
     public JobSkill() {
     }
 
-    public JobSkill(Job job, Skill skill, int skillLevel, String moreInfos) {
+    public JobSkill(Job job, Skill skill, SkillLevel skillLevel, String moreInfos) {
         this.jobId = job;
         this.skillId = skill;
         this.skillLevel = skillLevel;
@@ -46,11 +48,11 @@ public class JobSkill {
         this.skillId = skill;
     }
 
-    public int getSkillLevel() {
+    public SkillLevel getSkillLevel() {
         return skillLevel;
     }
 
-    public void setSkillLevel(int skillLevel) {
+    public void setSkillLevel(SkillLevel skillLevel) {
         this.skillLevel = skillLevel;
     }
 
