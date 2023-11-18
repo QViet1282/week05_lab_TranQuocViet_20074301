@@ -13,10 +13,8 @@ import vn.edu.iuh.fit.www_lab5.backend.models.Job;
 import vn.edu.iuh.fit.www_lab5.backend.models.Skill;
 import vn.edu.iuh.fit.www_lab5.backend.repositories.CandidateRepository;
 import vn.edu.iuh.fit.www_lab5.backend.repositories.JobRepository;
-import vn.edu.iuh.fit.www_lab5.backend.services.CandidateService;
-import vn.edu.iuh.fit.www_lab5.backend.services.CandidateSkillService;
-import vn.edu.iuh.fit.www_lab5.backend.services.JobService;
-import vn.edu.iuh.fit.www_lab5.backend.services.JobSkillService;
+import vn.edu.iuh.fit.www_lab5.backend.repositories.SkillRepository;
+import vn.edu.iuh.fit.www_lab5.backend.services.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +35,10 @@ public class CandidateController {
     private JobSkillService jobSkillService;
     @Autowired
     private CandidateSkillService candidateSkillService;
+    @Autowired
+    private SkillRepository skillRepository;
+    @Autowired
+    private SkillService skillService;
     @GetMapping("/list")
     public String showCandidateList(Model model) {
         model.addAttribute("candidates", candidateRepository.findAll());
@@ -60,6 +62,19 @@ public class CandidateController {
         return "candidates/jobSuggest";
     }
 
+    @GetMapping("/skillSuggest/{id}")
+    public String showSkillSuggestforCandedate(@PathVariable("id") Long id, Model model) {
+        Candidate candidate = candidateRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid candidate Id:" + id));
+        List<Skill> Skills = candidateSkillService.findSkillByCandidateId(id);
+        List<Skill> unlearnSkills = new ArrayList<Skill>();
+        skillService.findAll().forEach(skill -> {
+            if(!Skills.contains(skill))
+                unlearnSkills.add(skill);
+        });
+        model.addAttribute("Skills", unlearnSkills);
+        return "candidates/skillSuggest";
+    }
 
 
 //    @GetMapping("/candidates")

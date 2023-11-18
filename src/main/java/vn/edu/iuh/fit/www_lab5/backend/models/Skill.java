@@ -7,7 +7,7 @@ import vn.edu.iuh.fit.www_lab5.backend.enums.SkillType;
 @Table(name = "skill")
 public class Skill {
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "skill_id",columnDefinition = "bigint(20)")
     private long skillId;
     @Column(name = "skill_type", columnDefinition = "tinyint(4)")

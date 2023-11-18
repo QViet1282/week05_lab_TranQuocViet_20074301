@@ -16,6 +16,7 @@ import vn.edu.iuh.fit.www_lab5.backend.repositories.JobRepository;
 import vn.edu.iuh.fit.www_lab5.backend.services.CandidateSkillService;
 import vn.edu.iuh.fit.www_lab5.backend.services.JobSkillService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -68,22 +69,19 @@ public class JobController {
     }
 
     @GetMapping("/jobSuggest/{id}")
-    public String showJobSuggestForCandidate(@PathVariable("id") Long id, Model model) {
-        // Lấy thông tin của ứng viên từ cơ sở dữ liệu
-        Candidate candidate = candidateRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid candidate Id:" + id));
-
-        // Lấy danh sách kỹ năng của ứng viên
-        List<Skill> skills = candidateSkillService.findSkillByCandidateId(id);
-
-        // Tìm kiếm các công việc dựa trên kỹ năng của ứng viên
-        List<Long> jobIds = jobSkillService.findJobsBySkills(skills);
-        List<Job> suggestedJobs = jobRepository.findAllById(jobIds);
-        model.addAttribute("suggestedJobs", suggestedJobs);
-        model.addAttribute("candidate", candidate);
-
-        // Chuyển hướng đến trang hiển thị các công việc đề xuất cho ứng viên
-        return "candidates/jobSuggest";
+    public String showCandidateSuggestForJob(@PathVariable("id") Long jobId, Model model) {
+        Job job = jobRepository.findById(jobId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid job Id:" + jobId));
+        List<Skill> Skills = jobSkillService.findSkillByJobId(jobId);
+        List<Long> candidateIds = candidateSkillService.findCansBySkills(Skills);
+        List<Candidate> suggestedCandidates = new ArrayList<Candidate>();
+        for(Long candidateId : candidateIds) {
+            suggestedCandidates.add(candidateRepository.findById(candidateId).get());
+        }
+        model.addAttribute("suggestedCandidates", suggestedCandidates);
+        model.addAttribute("job", job);
+        return "job/candidateSuggest";
     }
+
 
 }
